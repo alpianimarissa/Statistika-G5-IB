@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IB Grade 5 Math: Statistics Mastery & Exam Prep</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for rendering dynamic interactive charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        h1, h2, h3, .font-heading {
+            font-family: 'Fredoka', cursive;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <!-- HEADER / NAVBAR -->
+    <header class="bg-indigo-700 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/10 p-2 rounded-xl backdrop-blur-md">
+                    <i class="fa-solid fa-chart-line text-2xl text-yellow-300"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold leading-tight">IB Grade 5 Statistics Exam Prep</h1>
+                    <p class="text-xs text-indigo-200">Interactive Data Analysis & Concepts Mastery</p>
+                </div>
+            </div>
+
+            <!-- Global Actions & Progress Bar -->
+            <div class="flex items-center gap-4">
+                <div class="hidden sm:flex flex-col items-end">
+                    <span id="overall-progress-text" class="text-xs font-semibold text-indigo-100">0 of 60 Completed</span>
+                    <div class="w-36 bg-indigo-900/50 rounded-full h-2.5 mt-1 overflow-hidden">
+                        <div id="overall-progress-bar" class="bg-yellow-400 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <button onclick="resetDataConfirmation()" class="bg-indigo-800 hover:bg-rose-600 text-white text-xs font-bold py-2 px-3 rounded-lg transition-colors flex items-center gap-1 shadow">
+                    <i class="fa-solid fa-rotate-right"></i> Reset Progress
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+        <!-- NAVIGATION SIDEBAR -->
+        <aside class="lg:col-span-1 bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-col justify-between max-h-[85vh] overflow-hidden">
+            <div>
+                <h2 class="text-lg font-bold text-slate-800 mb-3 flex items-center justify-between">
+                    <span><i class="fa-solid fa-layer-group text-indigo-600 mr-2"></i> Categories</span>
+                    <span class="text-xs font-semibold bg-indigo-100 text-indigo-700 py-1 px-2.5 rounded-full">60 Questions</span>
+                </h2>
+
+                <!-- Category Tabs -->
+                <div class="space-y-1 mb-4">
+                    <button onclick="switchCategory(0)" id="cat-btn-0" class="cat-btn w-full text-left px-3 py-2.5 rounded-xl font-medium text-sm transition flex items-center justify-between bg-indigo-50 text-indigo-700 border-l-4 border-indigo-600 font-bold">
+                        <span class="truncate"><i class="fa-solid fa-list-ol mr-2"></i> 1. Data Rows</span>
+                        <span id="cat-badge-0" class="text-xs bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-full font-bold">0/10</span>
+                    </button>
+                    <button onclick="switchCategory(1)" id="cat-btn-1" class="cat-btn w-full text-left px-3 py-2.5 rounded-xl font-medium text-sm transition flex items-center justify-between text-slate-600 hover:bg-slate-100">
+                        <span class="truncate"><i class="fa-solid fa-table mr-2"></i> 2. Frequency Tables</span>
+                        <span id="cat-badge-1" class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-bold">0/10</span>
+                    </button>
+                    <button onclick="switchCategory(2)" id="cat-btn-2" class="cat-btn w-full text-left px-3 py-2.5 rounded-xl font-medium text-sm transition flex items-center justify-between text-slate-600 hover:bg-slate-100">
+                        <span class="truncate"><i class="fa-solid fa-chart-column mr-2"></i> 3. Bar Charts</span>
+                        <span id="cat-badge-2" class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-bold">0/10</span>
+                    </button>
+                    <button onclick="switchCategory(3)" id="cat-btn-3" class="cat-btn w-full text-left px-3 py-2.5 rounded-xl font-medium text-sm transition flex items-center justify-between text-slate-600 hover:bg-slate-100">
+                        <span class="truncate"><i class="fa-solid fa-chart-pie mr-2"></i> 4. Pie Charts</span>
+                        <span id="cat-badge-3" class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-bold">0/10</span>
+                    </button>
+                    <button onclick="switchCategory(4)" id="cat-btn-4" class="cat-btn w-full text-left px-3 py-2.5 rounded-xl font-medium text-sm transition flex items-center justify-between text-slate-600 hover:bg-slate-100">
+                        <span class="truncate"><i class="fa-solid fa-chart-line mr-2"></i> 5. Line Graphs</span>
+                        <span id="cat-badge-4" class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-bold">0/10</span>
+                    </button>
+                    <button onclick="switchCategory(5)" id="cat-btn-5" class="cat-btn w-full text-left px-3 py-2.5 rounded-xl font-medium text-sm transition flex items-center justify-between text-slate-600 hover:bg-slate-100">
+                        <span class="truncate"><i class="fa-solid fa-icons mr-2"></i> 6. Pictograms</span>
+                        <span id="cat-badge-5" class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-bold">0/10</span>
+                    </button>
+                </div>
+
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Question Grid</h3>
+                <!-- Question Buttons Grid -->
+                <div id="question-grid" class="grid grid-cols-5 gap-2 max-h-[220px] overflow-y-auto custom-scrollbar p-1">
+                    <!-- Dynamic rendering of buttons 1-10 -->
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 flex justify-between items-center">
+                <span><i class="fa-solid fa-wifi text-emerald-500 mr-1"></i> Auto-Saved</span>
+                <span id="active-cat-name" class="font-semibold text-slate-700">Raw Data Rows</span>
+            </div>
+        </aside>
+
+        <!-- WORKSPACE / QUESTION CONTAINER -->
+        <section class="lg:col-span-3 bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+            <div id="question-workspace">
+                <!-- Header with Question Number and Title -->
+                <div class="flex flex-wrap items-center justify-between border-b border-slate-100 pb-4 mb-5 gap-2">
+                    <div>
+                        <span id="question-tag" class="text-xs font-bold uppercase tracking-wider bg-indigo-100 text-indigo-800 py-1 px-3 rounded-full">Category 1 • Question 1 of 10</span>
+                        <h2 id="question-title" class="text-xl md:text-2xl font-bold text-slate-800 mt-2">Grade 5 Math Quiz Scores</h2>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span id="status-pill" class="text-xs font-semibold px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 flex items-center gap-1.5">
+                            <i class="fa-regular fa-clock"></i> Not Submitted
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Scenario & Visual Presentation Area -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-6">
+                    <div id="scenario-text-container" class="md:col-span-12 space-y-3 text-slate-700 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <p id="question-context" class="text-base font-medium text-slate-800 leading-relaxed"></p>
+                        <!-- Dynamic Visual Element Placeholder -->
+                        <div id="visual-container" class="mt-4 flex justify-center items-center overflow-x-auto min-h-[160px]"></div>
+                    </div>
+                </div>
+
+                <!-- ESSAY INPUT FORM (5-part questions) -->
+                <form id="quiz-form" onsubmit="event.preventDefault(); submitAnswer();" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- 1. Order -->
+                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition">
+                            <label class="block text-xs font-bold uppercase text-slate-500 mb-1">a. Ascending Order (Smallest to Largest)</label>
+                            <input type="text" id="ans-order" placeholder="" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm font-mono">
+                            <div id="feedback-order" class="hidden text-xs mt-1 font-semibold"></div>
+                        </div>
+
+                        <!-- 2. Mean -->
+                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition">
+                            <label class="block text-xs font-bold uppercase text-slate-500 mb-1">b. Mean (Average)</label>
+                            <input type="text" id="ans-mean" placeholder="" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm font-mono">
+                            <div id="feedback-mean" class="hidden text-xs mt-1 font-semibold"></div>
+                        </div>
+
+                        <!-- 3. Median -->
+                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition">
+                            <label class="block text-xs font-bold uppercase text-slate-500 mb-1">c. Median (Middle Value)</label>
+                            <input type="text" id="ans-median" placeholder="" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm font-mono">
+                            <div id="feedback-median" class="hidden text-xs mt-1 font-semibold"></div>
+                        </div>
+
+                        <!-- 4. Mode -->
+                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition">
+                            <label class="block text-xs font-bold uppercase text-slate-500 mb-1">d. Mode (Most Frequent)</label>
+                            <input type="text" id="ans-mode" placeholder="" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm font-mono">
+                            <div id="feedback-mode" class="hidden text-xs mt-1 font-semibold"></div>
+                        </div>
+
+                        <!-- 5. Range -->
+                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition">
+                            <label class="block text-xs font-bold uppercase text-slate-500 mb-1">e. Range (Difference)</label>
+                            <input type="text" id="ans-range" placeholder="" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm font-mono">
+                            <div id="feedback-range" class="hidden text-xs mt-1 font-semibold"></div>
+                        </div>
+                    </div>
+
+                    <!-- Submit & Solution Explanation Box -->
+                    <div id="explanation-box" class="hidden bg-slate-100 border-l-4 border-indigo-500 p-4 rounded-xl mt-4 text-xs md:text-sm text-slate-700">
+                        <p class="font-bold text-indigo-900 mb-1"><i class="fa-solid fa-lightbulb text-yellow-500 mr-1"></i> IB Assessment Solutions & Steps:</p>
+                        <div id="explanation-content" class="space-y-1 font-mono"></div>
+                    </div>
+
+                    <div class="pt-2 flex justify-end">
+                        <button type="submit" id="btn-submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 px-6 rounded-xl transition shadow-md flex items-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> Submit & Check Answers
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- NAVIGATION BUTTONS -->
+            <div class="flex items-center justify-between border-t border-slate-100 pt-4 mt-6">
+                <button onclick="navigateQuestion(-1)" id="btn-prev" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 px-4 rounded-xl text-sm transition flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> Previous Question
+                </button>
+                <div class="text-xs text-slate-400 font-medium">Use grid or arrows to navigate</div>
+                <button onclick="navigateQuestion(1)" id="btn-next" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 px-4 rounded-xl text-sm transition flex items-center gap-2">
+                    Next Question <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-3 text-center text-xs text-slate-500">
+        <p>IB Primary Years Programme (PYP) Grade 5 Mathematics • Statistics & Data Handling Module</p>
+    </footer>
+
+    <!-- SCRIPT & DATA -->
+    <script>
+        // QUESTION BANK (6 Categories x 10 Questions = 60 Questions)
+        const quizData = [
+            // CATEGORY 0: RAW DATA ROWS
+            {
+                catIndex: 0,
+                catTitle: "Raw Data Rows",
+                qIndex: 0,
+                title: "Grade 5 Math Quiz Scores",
+                context: "A group of 7 Grade 5 students scored the following points in a mental math challenge out of 10 points:",
+                rawValues: [8, 5, 9, 5, 7, 10, 5],
+                visualType: "numbers",
+                answers: {
+                    order: "5, 5, 5, 7, 8, 9, 10",
+                    mean: "7",
+                    median: "7",
+                    mode: "5",
+                    range: "5"
+                },
+                explanation: "Ordered: 5, 5, 5, 7, 8, 9, 10. <br>Mean: (5+5+5+7+8+9+10)/7 = 49/7 = 7. <br>Median: Middle value (4th position) = 7. <br>Mode: 5 (appears 3 times). <br>Range: 10 - 5 = 5."
+            },
+            {
+                catIndex: 0,
+                catTitle: "Raw Data Rows",
+                qIndex: 1,
+                title: "Daily Temperatures in °C",
+                context: "The recorded afternoon temperatures (°C) during a science experiment over 6 days were:",
+                rawValues: [22, 18, 25, 20, 18, 23],
+                visualType: "numbers",
+                answers: {
+                    order: "18, 18, 20, 22, 23, 25",
+                    mean: "21",
+                    median: "21",
+                    mode: "18",
+                    range: "7"
+                },
+                explanation: "Ordered: 18, 18, 20, 22, 23, 25. <br>Mean: 126 / 6 = 21. <br>Median: Average of 20 & 22 = 21. <br>Mode: 18. <br>Range: 25 - 18 = 7."
+            },
+            {
+                catIndex: 0,
+                catTitle: "Raw Data Rows",
+                qIndex: 2,
+                title: "Library Books Read",
+                context: "Number of books read by 8 IB students during the reading marathon:",
+                rawValues: [4, 12, 8, 6, 4, 10, 4, 8],
+                visualType: "numbers",
+                answers: {
+                    order: "4, 4, 4, 6, 8, 8, 10, 12",
+                    mean: "7",
+                    median: "7",
+                    mode: "4",
+                    range: "8"
+                },
+                explanation: "Ordered: 4, 4, 4, 6, 8, 8, 10, 12. <br>Mean: 56 / 8 = 7. <br>Median: (6 + 8)/2 = 7. <br>Mode: 4. <br>Range: 12 - 4 = 8."
+            },
+            {
+                catIndex: 0,
+                catTitle: "Raw Data Rows",
+                qIndex: 3,
+                title: "Plant Growth Heights",
+                context: "Heights in cm of 5 sunflower seedlings measured in biology class:",
+                rawValues: [15, 22, 11, 22, 30],
+                visualType: "numbers",
+                answers: {
+                    order: "11, 15, 22, 22, 30",
+                    mean: "20",
+                    median: "22",
+                    mode: "22",
+                    range: "19"
+                },
+                explanation: "Ordered: 11, 15, 22, 22, 30. <br>Mean: 100 / 5 = 20. <br>Median: 22. <br>Mode: 22. <br>Range: 30 - 11 = 19."
+            },
+            {
+                catIndex: 0,
+                catTitle: "Raw Data Rows",
+                qIndex: 4,
+                title: "Basketball Free Throws",
+                context: "Points scored by a team captain in 7 consecutive basketball matches:",
+                rawValues: [12, 14, 14, 14, 15, 18, 18],
+                visualType: "numbers",
+                answers: {
+                    order: "12, 14, 14, 14, 15, 18, 18",
+                    mean: "15",
+                    median: "14",
+                    mode: "14",
+                    range: "6"
+                },
+                explanation: "Ordered: 12, 14, 14, 14, 15, 18, 18. <br>Mean: 105 / 7 = 15. <br>Median: 14. <br>Mode: 14. <br>Range: 18 - 12 = 6."
+            },
+            {
+                catIndex: 0,
+                catTitle: "Raw Data Rows",
+                qIndex: 5,
+                title: "Recycling Plastic Bottles",
+                context: "Number of plastic bottles collected by 6 households in a green project:",
+                rawValues: [35, 40, 25, 40, 50, 50],
+                visualType: "numbers",
+                answers: {
+                    order: "25, 35, 40, 40, 50, 50",
+                    mean: "40",
+                    median: "40",
+                    mode: "40, 50",
+                    range: "25"
+                },
+                explanation: "Ordered: 25, 35, 40, 40, 50, 50. <br>Mean: 240 / 6 = 40. <br>Median: (40+40)/2 = 40. <br>Mode: Bimodal dataset (40 and 50 both appear twice). <br>Range: 50 - 25 = 25."
+            },
+            {
+                catIndex: 0,
+                catTitle: "Raw Data Rows",
+                qIndex: 6,
+                title: "Spelling Bee Time (seconds)",
+                context: "Time taken (in seconds) by 5 contestants to spell complex vocabulary words:",
+                rawValues: [45, 30, 60, 30, 35],
+                visualType: "numbers",
+                answers: {
+                    order: "30, 30, 35, 45, 60",
+                    mean: "40",
+                    median: "35",
+                    mode: "30",
+                    range: "30"
+                },
+                explanation: "Ordered: 30, 30, 35, 45, 60. <br>Mean: 200 / 5 = 40. <br>Median: 35. <br>Mode: 30. <br>Range: 60 - 30 = 30."
+            },
+            {
+                catIndex: 0,
+                catTitle: "Raw Data Rows",
+                qIndex: 7,
+                title: "Pocket Money Allowance ($)",
+                context: "Weekly allowance ($) recorded for 9 primary school students:",
+                rawValues: [10, 10, 10, 10, 15, 15, 20, 24, 30],
+                visualType: "numbers",
+                answers: {
+                    order: "10, 10, 10, 10, 15, 15, 20, 24, 30",
+                    mean: "16",
+                    median: "15",
+                    mode: "10",
+                    range: "20"
+                },
+                explanation: "Ordered: 10, 10, 10, 10, 15, 15, 20, 24, 30. <br>Mean: 144 / 9 = 16. <br>Median: 15. <br>Mode: 10. <br>Range: 30 - 10 = 20."
+            },
+            {
+                catIndex: 0,
+                catTitle: "Raw Data Rows",
+                qIndex: 8,
+                title: "Swimming Lap Times (mins)",
+                context: "Lap times in minutes recorded for 6 squad swimmers:",
+                rawValues: [5, 8, 4, 10, 8, 13],
+                visualType: "numbers",
+                answers: {
+                    order: "4, 5, 8, 8, 10, 13",
+                    mean: "8",
+                    median: "8",
+                    mode: "8",
+                    range: "9"
+                },
+                explanation: "Ordered: 4, 5, 8, 8, 10, 13. <br>Mean: 48 / 6 = 8. <br>Median: (8+8)/2 = 8. <br>Mode: 8. <br>Range: 13 - 4 = 9."
+            },
+            {
+                catIndex: 0,
+                catTitle: "Raw Data Rows",
+                qIndex: 9,
+                title: "Classroom Art Supplies",
+                context: "Number of colored markers in 7 art boxes:",
+                rawValues: [12, 18, 15, 12, 24, 12, 19],
+                visualType: "numbers",
+                answers: {
+                    order: "12, 12, 12, 15, 18, 19, 24",
+                    mean: "16",
+                    median: "15",
+                    mode: "12",
+                    range: "12"
+                },
+                explanation: "Ordered: 12, 12, 12, 15, 18, 19, 24. <br>Mean: 112 / 7 = 16. <br>Median: 15. <br>Mode: 12. <br>Range: 24 - 12 = 12."
+            },
+
+            // CATEGORY 1: FREQUENCY TABLES
+            {
+                catIndex: 1,
+                catTitle: "Frequency Tables",
+                qIndex: 0,
+                title: "Sibling Count Survey",
+                context: "A frequency table showing the number of siblings Grade 5 students have:",
+                tableData: [
+                    { label: "Number of Siblings", values: [0, 1, 2, 3, 4] },
+                    { label: "Frequency (Students)", values: [3, 8, 5, 3, 1] }
+                ],
+                visualType: "table",
+                answers: {
+                    order: "0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 4",
+                    mean: "1.5",
+                    median: "1",
+                    mode: "1",
+                    range: "4"
+                },
+                explanation: "Total Students = 20. Total Siblings = 31. <br>Mean = 1.5. Median = 1. Mode = 1. Range = 4 - 0 = 4."
+            },
+            {
+                catIndex: 1,
+                catTitle: "Frequency Tables",
+                qIndex: 1,
+                title: "Shoe Sizes of Track Athletes",
+                context: "Frequency distribution of shoe sizes among track squad members:",
+                tableData: [
+                    { label: "Shoe Size (US)", values: [4, 5, 6, 7] },
+                    { label: "Frequency", values: [2, 5, 2, 1] }
+                ],
+                visualType: "table",
+                answers: {
+                    order: "4, 4, 5, 5, 5, 5, 5, 6, 6, 7",
+                    mean: "5.2",
+                    median: "5",
+                    mode: "5",
+                    range: "3"
+                },
+                explanation: "Values expanded: 4, 4, 5, 5, 5, 5, 5, 6, 6, 7. <br>Mean = 52/10 = 5.2. <br>Median = 5. Mode = 5. Range = 7 - 4 = 3."
+            },
+            {
+                catIndex: 1,
+                catTitle: "Frequency Tables",
+                qIndex: 2,
+                title: "Quiz Scores out of 5",
+                context: "Results of a 5-point formative check in science:",
+                tableData: [
+                    { label: "Score", values: [1, 2, 3, 4, 5] },
+                    { label: "Frequency", values: [1, 2, 4, 2, 1] }
+                ],
+                visualType: "table",
+                answers: {
+                    order: "1, 2, 2, 3, 3, 3, 3, 4, 4, 5",
+                    mean: "3",
+                    median: "3",
+                    mode: "3",
+                    range: "4"
+                },
+                explanation: "Total = 10 students. <br>Mean = 30/10 = 3. Median = 3. Mode = 3. Range = 5 - 1 = 4."
+            },
+            {
+                catIndex: 1,
+                catTitle: "Frequency Tables",
+                qIndex: 3,
+                title: "Pets Per Household",
+                context: "Survey of pet ownership in a local neighborhood block:",
+                tableData: [
+                    { label: "Number of Pets", values: [0, 1, 2, 3] },
+                    { label: "Number of Families", values: [4, 6, 4, 2] }
+                ],
+                visualType: "table",
+                answers: {
+                    order: "0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3",
+                    mean: "1.25",
+                    median: "1",
+                    mode: "1",
+                    range: "3"
+                },
+                explanation: "Expanded data (16 items). <br>Mean = 20/16 = 1.25. Median = 1. Mode = 1. Range = 3 - 0 = 3."
+            },
+            {
+                catIndex: 1,
+                catTitle: "Frequency Tables",
+                qIndex: 4,
+                title: "Pencils in Pencil Cases",
+                context: "Audit of pencil counts in students' desks:",
+                tableData: [
+                    { label: "Pencils Count", values: [2, 4, 6, 8] },
+                    { label: "Frequency", values: [3, 4, 2, 1] }
+                ],
+                visualType: "table",
+                answers: {
+                    order: "2, 2, 2, 4, 4, 4, 4, 6, 6, 8",
+                    mean: "4.2",
+                    median: "4",
+                    mode: "4",
+                    range: "6"
+                },
+                explanation: "Expanded: 2, 2, 2, 4, 4, 4, 4, 6, 6, 8. <br>Mean = 42/10 = 4.2. Median = 4. Mode = 4. Range = 8 - 2 = 6."
+            },
+            {
+                catIndex: 1,
+                catTitle: "Frequency Tables",
+                qIndex: 5,
+                title: "Hours of Sleep per Night",
+                context: "Sleep tracker records of Grade 5 students on a school night:",
+                tableData: [
+                    { label: "Sleep Hours", values: [7, 8, 9, 10] },
+                    { label: "Students", values: [1, 4, 4, 1] }
+                ],
+                visualType: "table",
+                answers: {
+                    order: "7, 8, 8, 8, 8, 9, 9, 9, 9, 10",
+                    mean: "8.5",
+                    median: "8.5",
+                    mode: "8, 9",
+                    range: "3"
+                },
+                explanation: "Values: 7, 8, 8, 8, 8, 9, 9, 9, 9, 10. <br>Mean = 85/10 = 8.5. Median = 8.5. Modes = 8 and 9. Range = 10 - 7 = 3."
+            },
+            {
+                catIndex: 1,
+                catTitle: "Frequency Tables",
+                qIndex: 6,
+                title: "Apples Consumed Weekly",
+                context: "Weekly apple intake survey among 8 teachers:",
+                tableData: [
+                    { label: "Apples per Week", values: [2, 5, 7, 10] },
+                    { label: "Frequency", values: [2, 3, 2, 1] }
+                ],
+                visualType: "table",
+                answers: {
+                    order: "2, 2, 5, 5, 5, 7, 7, 10",
+                    mean: "5.375",
+                    median: "5",
+                    mode: "5",
+                    range: "8"
+                },
+                explanation: "Expanded: 2, 2, 5, 5, 5, 7, 7, 10. <br>Mean = 43 / 8 = 5.375. Median = 5. Mode = 5. Range = 10 - 2 = 8."
+            },
+            {
+                catIndex: 1,
+                catTitle: "Frequency Tables",
+                qIndex: 7,
+                title: "Daily Water Glasses Consumed",
+                context: "Hydration check for 10 student athletes:",
+                tableData: [
+                    { label: "Glasses of Water", values: [4, 6, 8, 10] },
+                    { label: "Frequency", values: [2, 4, 3, 1] }
+                ],
+                visualType: "table",
+                answers: {
+                    order: "4, 4, 6, 6, 6, 6, 8, 8, 8, 10",
+                    mean: "6.6",
+                    median: "6",
+                    mode: "6",
+                    range: "6"
+                },
+                explanation: "Values: 4, 4, 6, 6, 6, 6, 8, 8, 8, 10. <br>Mean = 6.6. Median = 6. Mode = 6. Range = 10 - 4 = 6."
+            },
+            {
+                catIndex: 1,
+                catTitle: "Frequency Tables",
+                qIndex: 8,
+                title: "Board Game Dice Rolls",
+                context: "Outcomes of rolling a standard 6-sided die 12 times:",
+                tableData: [
+                    { label: "Dice Face", values: [1, 2, 3, 4, 5, 6] },
+                    { label: "Times Rolled", values: [2, 1, 3, 3, 2, 1] }
+                ],
+                visualType: "table",
+                answers: {
+                    order: "1, 1, 2, 3, 3, 3, 4, 4, 4, 5, 5, 6",
+                    mean: "3.42",
+                    median: "3.5",
+                    mode: "3, 4",
+                    range: "5"
+                },
+                explanation: "Expanded: 1,1, 2, 3,3,3, 4,4,4, 5,5, 6. Mean = 41/12 = 3.42. Median = (3+4)/2 = 3.5. Modes = 3 and 4. Range = 6 - 1 = 5."
+            },
+            {
+                catIndex: 1,
+                catTitle: "Frequency Tables",
+                qIndex: 9,
+                title: "Laps Run in Physical Education",
+                context: "Fitness test results for 10 students running laps around the track:",
+                tableData: [
+                    { label: "Laps Completed", values: [5, 10, 15, 20] },
+                    { label: "Students", values: [3, 4, 2, 1] }
+                ],
+                visualType: "table",
+                answers: {
+                    order: "5, 5, 5, 10, 10, 10, 10, 15, 15, 20",
+                    mean: "10.5",
+                    median: "10",
+                    mode: "10",
+                    range: "15"
+                },
+                explanation: "Values: 5, 5, 5, 10, 10, 10, 10, 15, 15, 20. <br>Mean = 10.5. Median = 10. Mode = 10. Range = 20 - 5 = 15."
+            },
+
+            // CATEGORY 2: BAR CHARTS
+            {
+                catIndex: 2,
+                catTitle: "Bar Charts",
+                qIndex: 0,
+                title: "Favorite Sports in Grade 5",
+                context: "The bar chart displays the number of students who voted for their favorite sport:",
+                chartType: "bar",
+                chartData: {
+                    labels: ["Soccer", "Basketball", "Tennis", "Swimming"],
+                    datasets: [{ label: "Number of Students", data: [12, 8, 4, 8], backgroundColor: "#6366f1" }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "4, 8, 8, 12",
+                    mean: "8",
+                    median: "8",
+                    mode: "8",
+                    range: "8"
+                },
+                explanation: "Values: 4, 8, 8, 12. Sum = 32. Mean = 32/4 = 8. Median = 8. Mode = 8. Range = 12 - 4 = 8."
+            },
+            {
+                catIndex: 2,
+                catTitle: "Bar Charts",
+                qIndex: 1,
+                title: "Canned Food Drive Collections",
+                context: "Number of cans collected by 5 classes during PYP Action Week:",
+                chartType: "bar",
+                chartData: {
+                    labels: ["5A", "5B", "5C", "5D", "5E"],
+                    datasets: [{ label: "Cans Collected", data: [20, 35, 15, 35, 45], backgroundColor: "#10b981" }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "15, 20, 35, 35, 45",
+                    mean: "30",
+                    median: "35",
+                    mode: "35",
+                    range: "30"
+                },
+                explanation: "Ordered: 15, 20, 35, 35, 45. <br>Mean = 150/5 = 30. Median = 35. Mode = 35. Range = 45 - 15 = 30."
+            },
+            {
+                catIndex: 2,
+                catTitle: "Bar Charts",
+                qIndex: 2,
+                title: "Library Books Borrowed by Day",
+                context: "Bar chart illustrating book checkouts from Monday to Friday:",
+                chartType: "bar",
+                chartData: {
+                    labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+                    datasets: [{ label: "Books Borrowed", data: [14, 22, 18, 22, 24], backgroundColor: "#3b82f6" }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "14, 18, 22, 22, 24",
+                    mean: "20",
+                    median: "22",
+                    mode: "22",
+                    range: "10"
+                },
+                explanation: "Data: 14, 18, 22, 22, 24. Mean = 20. Median = 22. Mode = 22. Range = 24 - 14 = 10."
+            },
+            {
+                catIndex: 2,
+                catTitle: "Bar Charts",
+                qIndex: 3,
+                title: "Art Project Colors Used",
+                context: "Bottles of paint used across 4 primary art rooms:",
+                chartType: "bar",
+                chartData: {
+                    labels: ["Red", "Blue", "Yellow", "Green"],
+                    datasets: [{ label: "Bottles Used", data: [9, 15, 9, 3], backgroundColor: "#f59e0b" }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "3, 9, 9, 15",
+                    mean: "9",
+                    median: "9",
+                    mode: "9",
+                    range: "12"
+                },
+                explanation: "Values: 3, 9, 9, 15. Sum = 36. Mean = 9. Median = 9. Mode = 9. Range = 12."
+            },
+            {
+                catIndex: 2,
+                catTitle: "Bar Charts",
+                qIndex: 4,
+                title: "Recycling Bins Count",
+                context: "Weight of paper (kg) recycled by 5 primary grade levels:",
+                chartType: "bar",
+                chartData: {
+                    labels: ["Gr 1", "Gr 2", "Gr 3", "Gr 4", "Gr 5"],
+                    datasets: [{ label: "Paper Recycled (kg)", data: [50, 60, 40, 60, 90], backgroundColor: "#8b5cf6" }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "40, 50, 60, 60, 90",
+                    mean: "60",
+                    median: "60",
+                    mode: "60",
+                    range: "50"
+                },
+                explanation: "Ordered: 40, 50, 60, 60, 90. Mean = 60. Median = 60. Mode = 60. Range = 50."
+            },
+            {
+                catIndex: 2,
+                catTitle: "Bar Charts",
+                qIndex: 5,
+                title: "Visitor Count at School Fair",
+                context: "Attendance recorded during 4 time slots at the spring fair:",
+                chartType: "bar",
+                chartData: {
+                    labels: ["10 AM", "12 PM", "2 PM", "4 PM"],
+                    datasets: [{ label: "Visitors", data: [100, 250, 250, 200], backgroundColor: "#ec4899" }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "100, 200, 250, 250",
+                    mean: "200",
+                    median: "225",
+                    mode: "250",
+                    range: "150"
+                },
+                explanation: "Ordered: 100, 200, 250, 250. Mean = 200. Median = (200+250)/2 = 225. Mode = 250. Range = 150."
+            },
+            {
+                catIndex: 2,
+                catTitle: "Bar Charts",
+                qIndex: 6,
+                title: "After-School Clubs Attendance",
+                context: "Student enrollment in 5 after-school activity clubs:",
+                chartType: "bar",
+                chartData: {
+                    labels: ["Chess", "Drama", "Coding", "Robotics", "Music"],
+                    datasets: [{ label: "Students", data: [12, 18, 24, 18, 8], backgroundColor: "#14b8a6" }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "8, 12, 18, 18, 24",
+                    mean: "16",
+                    median: "18",
+                    mode: "18",
+                    range: "16"
+                },
+                explanation: "Values: 8, 12, 18, 18, 24. Mean = 16. Median = 18. Mode = 18. Range = 16."
+            },
+            {
+                catIndex: 2,
+                catTitle: "Bar Charts",
+                qIndex: 7,
+                title: "Math Quiz High Scores",
+                context: "Number of students scoring 100% in Math across 4 terms:",
+                chartType: "bar",
+                chartData: {
+                    labels: ["Term 1", "Term 2", "Term 3", "Term 4"],
+                    datasets: [{ label: "High Scorers", data: [5, 15, 10, 10], backgroundColor: "#f97316" }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "5, 10, 10, 15",
+                    mean: "10",
+                    median: "10",
+                    mode: "10",
+                    range: "10"
+                },
+                explanation: "Values: 5, 10, 10, 15. Sum = 40. Mean = 10. Median = 10. Mode = 10. Range = 10."
+            },
+            {
+                catIndex: 2,
+                catTitle: "Bar Charts",
+                qIndex: 8,
+                title: "Healthy Snacks Sold",
+                context: "Units of healthy snacks sold in the cafeteria over 5 days:",
+                chartType: "bar",
+                chartData: {
+                    labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+                    datasets: [{ label: "Snacks Sold", data: [45, 30, 45, 60, 70], backgroundColor: "#06b6d4" }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "30, 45, 45, 60, 70",
+                    mean: "50",
+                    median: "45",
+                    mode: "45",
+                    range: "40"
+                },
+                explanation: "Values: 30, 45, 45, 60, 70. Mean = 50. Median = 45. Mode = 45. Range = 70 - 30 = 40."
+            },
+            {
+                catIndex: 2,
+                catTitle: "Bar Charts",
+                qIndex: 9,
+                title: "Miles Walked for Charity",
+                context: "Distance in miles walked by 4 Grade 5 house teams:",
+                chartType: "bar",
+                chartData: {
+                    labels: ["Red Dragon", "Blue Jay", "Green Griffin", "Gold Phoenix"],
+                    datasets: [{ label: "Miles Walked", data: [80, 120, 80, 160], backgroundColor: "#e11d48" }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "80, 80, 120, 160",
+                    mean: "110",
+                    median: "100",
+                    mode: "80",
+                    range: "80"
+                },
+                explanation: "Values: 80, 80, 120, 160. Mean = 110. Median = (80+120)/2 = 100. Mode = 80. Range = 80."
+            },
+
+            // CATEGORY 3: PIE CHARTS
+            {
+                catIndex: 3,
+                catTitle: "Pie Charts",
+                qIndex: 0,
+                title: "School Lunch Choice Breakdown",
+                context: "A pie chart showing student lunch choices among 40 students in Grade 5:",
+                chartType: "pie",
+                chartData: {
+                    labels: ["Pizza (40% • 144°)", "Salad (10% • 36°)", "Pasta (30% • 108°)", "Sandwich (20% • 72°)"],
+                    datasets: [{ data: [16, 4, 12, 8], backgroundColor: ["#ef4444", "#10b981", "#f59e0b", "#3b82f6"] }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "4, 8, 12, 16",
+                    mean: "10",
+                    median: "10",
+                    mode: "None",
+                    range: "12"
+                },
+                explanation: "Values: 4, 8, 12, 16. Mean = 10. Median = (8+12)/2 = 10. Mode = None. Range = 12."
+            },
+            {
+                catIndex: 3,
+                catTitle: "Pie Charts",
+                qIndex: 1,
+                title: "Student Transportation to School",
+                context: "Method of transport for 100 Grade 5 students:",
+                chartType: "pie",
+                chartData: {
+                    labels: ["School Bus (45% • 162°)", "Car (25% • 90°)", "Walk (20% • 72°)", "Bicycle (10% • 36°)"],
+                    datasets: [{ data: [45, 25, 20, 10], backgroundColor: ["#f59e0b", "#3b82f6", "#10b981", "#8b5cf6"] }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "10, 20, 25, 45",
+                    mean: "25",
+                    median: "22.5",
+                    mode: "None",
+                    range: "35"
+                },
+                explanation: "Values: 10, 20, 25, 45. Mean = 25. Median = (20+25)/2 = 22.5. Mode = None. Range = 35."
+            },
+            {
+                catIndex: 3,
+                catTitle: "Pie Charts",
+                qIndex: 2,
+                title: "Favorite Primary Subjects",
+                context: "Survey of 60 students voting for their favorite core subject:",
+                chartType: "pie",
+                chartData: {
+                    labels: ["Math (33.3% • 120°)", "Science (25% • 90°)", "English (16.7% • 60°)", "Art (25% • 90°)"],
+                    datasets: [{ data: [20, 15, 10, 15], backgroundColor: ["#6366f1", "#14b8a6", "#ec4899", "#f97316"] }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "10, 15, 15, 20",
+                    mean: "15",
+                    median: "15",
+                    mode: "15",
+                    range: "10"
+                },
+                explanation: "Values: 10, 15, 15, 20. Mean = 15. Median = 15. Mode = 15. Range = 10."
+            },
+            {
+                catIndex: 3,
+                catTitle: "Pie Charts",
+                qIndex: 3,
+                title: "Music Instrument Preference",
+                context: "Instrument choices among 50 music academy students:",
+                chartType: "pie",
+                chartData: {
+                    labels: ["Piano (30% • 108°)", "Guitar (30% • 108°)", "Violin (20% • 72°)", "Drums (10% • 36°)", "Flute (10% • 36°)"],
+                    datasets: [{ data: [15, 15, 10, 5, 5], backgroundColor: ["#0284c7", "#059669", "#d97706", "#dc2626", "#7c3aed"] }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "5, 5, 10, 15, 15",
+                    mean: "10",
+                    median: "10",
+                    mode: "5, 15",
+                    range: "10"
+                },
+                explanation: "Values: 5, 5, 10, 15, 15. Mean = 10. Median = 10. Modes = 5 and 15. Range = 15 - 5 = 10."
+            },
+            {
+                catIndex: 3,
+                catTitle: "Pie Charts",
+                qIndex: 4,
+                title: "Types of Books in Classroom Library",
+                context: "A breakdown of 80 total books available in the classroom library:",
+                chartType: "pie",
+                chartData: {
+                    labels: ["Fiction (45% • 162°)", "Non-Fiction (30% • 108°)", "Comics (15% • 54°)", "Poetry (10% • 36°)"],
+                    datasets: [{ data: [36, 24, 12, 8], backgroundColor: ["#4f46e5", "#0ea5e9", "#facc15", "#f43f5e"] }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "8, 12, 24, 36",
+                    mean: "20",
+                    median: "18",
+                    mode: "None",
+                    range: "28"
+                },
+                explanation: "Values: 8, 12, 24, 36. Mean = 20. Median = (12+24)/2 = 18. Mode = None. Range = 28."
+            },
+            {
+                catIndex: 3,
+                catTitle: "Pie Charts",
+                qIndex: 5,
+                title: "Household Energy Usage Breakdown",
+                context: "Daily appliance power consumption distribution (28 kWh total):",
+                chartType: "pie",
+                chartData: {
+                    labels: ["HVAC (42.9% • 154.3°)", "Lighting (14.3% • 51.4°)", "Refrigeration (28.6% • 102.9°)", "Electronics (14.3% • 51.4°)"],
+                    datasets: [{ data: [12, 4, 8, 4], backgroundColor: ["#ef4444", "#eab308", "#06b6d4", "#a855f7"] }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "4, 4, 8, 12",
+                    mean: "7",
+                    median: "6",
+                    mode: "4",
+                    range: "8"
+                },
+                explanation: "Values: 4, 4, 8, 12. Mean = 7. Median = (4+8)/2 = 6. Mode = 4. Range = 12 - 4 = 8."
+            },
+            {
+                catIndex: 3,
+                catTitle: "Pie Charts",
+                qIndex: 6,
+                title: "Weekend Time Allocation",
+                context: "Hours spent on various activities by a Grade 5 student on Saturday (24 hours total):",
+                chartType: "pie",
+                chartData: {
+                    labels: ["Sleep (37.5% • 135°)", "Play/Sports (29.2% • 105°)", "Study (12.5% • 45°)", "Meals/Family (20.8% • 75°)"],
+                    datasets: [{ data: [9, 7, 3, 5], backgroundColor: ["#1e293b", "#22c55e", "#3b82f6", "#f97316"] }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "3, 5, 7, 9",
+                    mean: "6",
+                    median: "6",
+                    mode: "None",
+                    range: "6"
+                },
+                explanation: "Values: 3, 5, 7, 9. Mean = 6. Median = (5+7)/2 = 6. Mode = None. Range = 6."
+            },
+            {
+                catIndex: 3,
+                catTitle: "Pie Charts",
+                qIndex: 7,
+                title: "Fruit Basket Composition",
+                context: "Count of pieces of fruit in a large school cafeteria basket (30 total pieces):",
+                chartType: "pie",
+                chartData: {
+                    labels: ["Apples (40% • 144°)", "Bananas (30% • 108°)", "Oranges (20% • 72°)", "Pears (10% • 36°)"],
+                    datasets: [{ data: [12, 9, 6, 3], backgroundColor: ["#dc2626", "#eab308", "#f97316", "#84cc16"] }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "3, 6, 9, 12",
+                    mean: "7.5",
+                    median: "7.5",
+                    mode: "None",
+                    range: "9"
+                },
+                explanation: "Values: 3, 6, 9, 12. Mean = 7.5. Median = (6+9)/2 = 7.5. Mode = None. Range = 9."
+            },
+            {
+                catIndex: 3,
+                catTitle: "Pie Charts",
+                qIndex: 8,
+                title: "School Club Budget Distribution",
+                context: "Allocation of a $200 student council event budget:",
+                chartType: "pie",
+                chartData: {
+                    labels: ["Decorations (25% • 90°)", "Snacks (40% • 144°)", "Prizes (25% • 90°)", "Games (10% • 36°)"],
+                    datasets: [{ data: [50, 80, 50, 20], backgroundColor: ["#ec4899", "#10b981", "#6366f1", "#f59e0b"] }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "20, 50, 50, 80",
+                    mean: "50",
+                    median: "50",
+                    mode: "50",
+                    range: "60"
+                },
+                explanation: "Values: 20, 50, 50, 80. Mean = 50. Median = 50. Mode = 50. Range = 60."
+            },
+            {
+                catIndex: 3,
+                catTitle: "Pie Charts",
+                qIndex: 9,
+                title: "Recyclable Trash Types",
+                context: "Items collected in kilograms during campus cleanup (48 kg total):",
+                chartType: "pie",
+                chartData: {
+                    labels: ["Cardboard (37.5% • 135°)", "Plastics (25% • 90°)", "Metal Cans (12.5% • 45°)", "Glass (25% • 90°)"],
+                    datasets: [{ data: [18, 12, 6, 12], backgroundColor: ["#854d0e", "#0284c7", "#64748b", "#059669"] }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "6, 12, 12, 18",
+                    mean: "12",
+                    median: "12",
+                    mode: "12",
+                    range: "12"
+                },
+                explanation: "Values: 6, 12, 12, 18. Mean = 12. Median = 12. Mode = 12. Range = 12."
+            },
+
+            // CATEGORY 4: LINE GRAPHS
+            {
+                catIndex: 4,
+                catTitle: "Line Graphs",
+                qIndex: 0,
+                title: "Plant Growth Over 5 Weeks",
+                context: "Height of a bean plant recorded at the end of each week in cm:",
+                chartType: "line",
+                chartData: {
+                    labels: ["Wk 1", "Wk 2", "Wk 3", "Wk 4", "Wk 5"],
+                    datasets: [{ label: "Height (cm)", data: [2, 6, 10, 14, 18], borderColor: "#10b981", backgroundColor: "rgba(16,185,129,0.1)", fill: true }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "2, 6, 10, 14, 18",
+                    mean: "10",
+                    median: "10",
+                    mode: "None",
+                    range: "16"
+                },
+                explanation: "Values: 2, 6, 10, 14, 18. Mean = 10. Median = 10. Mode = None. Range = 16."
+            },
+            {
+                catIndex: 4,
+                catTitle: "Line Graphs",
+                qIndex: 1,
+                title: "Hourly Temperature Changes",
+                context: "Temperature readings (°C) taken from 8 AM to 12 PM:",
+                chartType: "line",
+                chartData: {
+                    labels: ["8 AM", "9 AM", "10 AM", "11 AM", "12 PM"],
+                    datasets: [{ label: "Temp (°C)", data: [15, 18, 22, 22, 23], borderColor: "#f59e0b", backgroundColor: "rgba(245,158,11,0.1)", fill: true }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "15, 18, 22, 22, 23",
+                    mean: "20",
+                    median: "22",
+                    mode: "22",
+                    range: "8"
+                },
+                explanation: "Values: 15, 18, 22, 22, 23. Mean = 20. Median = 22. Mode = 22. Range = 23 - 15 = 8."
+            },
+            {
+                catIndex: 4,
+                catTitle: "Line Graphs",
+                qIndex: 2,
+                title: "Store Visitor Attendance",
+                context: "Number of shoppers in a stationery store over 6 hours:",
+                chartType: "line",
+                chartData: {
+                    labels: ["1 PM", "2 PM", "3 PM", "4 PM", "5 PM", "6 PM"],
+                    datasets: [{ label: "Shoppers", data: [10, 25, 30, 25, 40, 50], borderColor: "#6366f1", backgroundColor: "rgba(99,102,241,0.1)", fill: true }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "10, 25, 25, 30, 40, 50",
+                    mean: "30",
+                    median: "27.5",
+                    mode: "25",
+                    range: "40"
+                },
+                explanation: "Values: 10, 25, 25, 30, 40, 50. Mean = 30. Median = (25+30)/2 = 27.5. Mode = 25. Range = 40."
+            },
+            {
+                catIndex: 4,
+                catTitle: "Line Graphs",
+                qIndex: 3,
+                title: "Runner's Distance Logged",
+                context: "Distance in km logged by a marathon runner over 5 training days:",
+                chartType: "line",
+                chartData: {
+                    labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+                    datasets: [{ label: "Distance (km)", data: [5, 8, 5, 12, 10], borderColor: "#ec4899", backgroundColor: "rgba(236,72,153,0.1)", fill: true }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "5, 5, 8, 10, 12",
+                    mean: "8",
+                    median: "8",
+                    mode: "5",
+                    range: "7"
+                },
+                explanation: "Values: 5, 5, 8, 10, 12. Mean = 8. Median = 8. Mode = 5. Range = 12 - 5 = 7."
+            },
+            {
+                catIndex: 4,
+                catTitle: "Line Graphs",
+                qIndex: 4,
+                title: "Monthly Rainfall Measurements",
+                context: "Rainfall recorded in mm from May to September:",
+                chartType: "line",
+                chartData: {
+                    labels: ["May", "Jun", "Jul", "Aug", "Sep"],
+                    datasets: [{ label: "Rainfall (mm)", data: [40, 70, 100, 70, 20], borderColor: "#0284c7", backgroundColor: "rgba(2,132,199,0.1)", fill: true }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "20, 40, 70, 70, 100",
+                    mean: "60",
+                    median: "70",
+                    mode: "70",
+                    range: "80"
+                },
+                explanation: "Values: 20, 40, 70, 70, 100. Mean = 60. Median = 70. Mode = 70. Range = 80."
+            },
+            {
+                catIndex: 4,
+                catTitle: "Line Graphs",
+                qIndex: 5,
+                title: "School Energy Savings",
+                context: "Electricity bill savings ($) recorded over 4 quarters:",
+                chartType: "line",
+                chartData: {
+                    labels: ["Q1", "Q2", "Q3", "Q4"],
+                    datasets: [{ label: "Savings ($)", data: [150, 200, 200, 250], borderColor: "#16a34a", backgroundColor: "rgba(22,163,74,0.1)", fill: true }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "150, 200, 200, 250",
+                    mean: "200",
+                    median: "200",
+                    mode: "200",
+                    range: "100"
+                },
+                explanation: "Values: 150, 200, 200, 250. Mean = 200. Median = 200. Mode = 200. Range = 250 - 150 = 100."
+            },
+            {
+                catIndex: 4,
+                catTitle: "Line Graphs",
+                qIndex: 6,
+                title: "Typing Speed Progress",
+                context: "Words per minute (WPM) scored in 5 weekly speed tests:",
+                chartType: "line",
+                chartData: {
+                    labels: ["Test 1", "Test 2", "Test 3", "Test 4", "Test 5"],
+                    datasets: [{ label: "WPM", data: [25, 30, 35, 30, 40], borderColor: "#8b5cf6", backgroundColor: "rgba(139,92,246,0.1)", fill: true }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "25, 30, 30, 35, 40",
+                    mean: "32",
+                    median: "30",
+                    mode: "30",
+                    range: "15"
+                },
+                explanation: "Values: 25, 30, 30, 35, 40. Mean = 32. Median = 30. Mode = 30. Range = 15."
+            },
+            {
+                catIndex: 4,
+                catTitle: "Line Graphs",
+                qIndex: 7,
+                title: "Cafeteria Soup Bowls Sold",
+                context: "Bowls of warm soup served daily over a chilly week:",
+                chartType: "line",
+                chartData: {
+                    labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+                    datasets: [{ label: "Soup Bowls", data: [40, 55, 60, 55, 90], borderColor: "#ea580c", backgroundColor: "rgba(234,88,12,0.1)", fill: true }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "40, 55, 55, 60, 90",
+                    mean: "60",
+                    median: "55",
+                    mode: "55",
+                    range: "50"
+                },
+                explanation: "Values: 40, 55, 55, 60, 90. Mean = 60. Median = 55. Mode = 55. Range = 50."
+            },
+            {
+                catIndex: 4,
+                catTitle: "Line Graphs",
+                qIndex: 8,
+                title: "Bicycle Ride Heart Rate Tracker",
+                context: "BPM readings recorded every 10 minutes during workout:",
+                chartType: "line",
+                chartData: {
+                    labels: ["0m", "10m", "20m", "30m", "40m"],
+                    datasets: [{ label: "Heart Rate (BPM)", data: [80, 110, 130, 130, 100], borderColor: "#dc2626", backgroundColor: "rgba(220,38,38,0.1)", fill: true }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "80, 100, 110, 130, 130",
+                    mean: "110",
+                    median: "110",
+                    mode: "130",
+                    range: "50"
+                },
+                explanation: "Values: 80, 100, 110, 130, 130. Mean = 110. Median = 110. Mode = 130. Range = 130 - 80 = 50."
+            },
+            {
+                catIndex: 4,
+                catTitle: "Line Graphs",
+                qIndex: 9,
+                title: "Website Daily Page Views",
+                context: "Traffic logs in thousands of views across 5 days:",
+                chartType: "line",
+                chartData: {
+                    labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"],
+                    datasets: [{ label: "Views (k)", data: [12, 18, 12, 24, 14], borderColor: "#2563eb", backgroundColor: "rgba(37,99,235,0.1)", fill: true }]
+                },
+                visualType: "chart",
+                answers: {
+                    order: "12, 12, 14, 18, 24",
+                    mean: "16",
+                    median: "14",
+                    mode: "12",
+                    range: "12"
+                },
+                explanation: "Values: 12, 12, 14, 18, 24. Mean = 16. Median = 14. Mode = 12. Range = 12."
+            },
+
+            // CATEGORY 5: PICTOGRAMS
+            {
+                catIndex: 5,
+                catTitle: "Pictograms",
+                qIndex: 0,
+                title: "Apple Harvest Count",
+                context: "A pictogram showing apples harvested by 4 student groups.",
+                keyText: "Key: 🍎 = 5 apples",
+                pictoData: [
+                    { label: "Group A", icon: "🍎", count: 4 },
+                    { label: "Group B", icon: "🍎", count: 6 },
+                    { label: "Group C", icon: "🍎", count: 2 },
+                    { label: "Group D", icon: "🍎", count: 4 }
+                ],
+                visualType: "pictogram",
+                answers: {
+                    order: "10, 20, 20, 30",
+                    mean: "20",
+                    median: "20",
+                    mode: "20",
+                    range: "20"
+                },
+                explanation: "Calculated values (count x 5): Group A = 20, Group B = 30, Group C = 10, Group D = 20. <br>Ordered: 10, 20, 20, 30. Mean = 20. Median = 20. Mode = 20. Range = 20."
+            },
+            {
+                catIndex: 5,
+                catTitle: "Pictograms",
+                qIndex: 1,
+                title: "Star Rewards Earned",
+                context: "Gold stars earned by 5 table groups in classroom management:",
+                keyText: "Key: ⭐ = 4 stars",
+                pictoData: [
+                    { label: "Table 1", icon: "⭐", count: 3 },
+                    { label: "Table 2", icon: "⭐", count: 5 },
+                    { label: "Table 3", icon: "⭐", count: 2 },
+                    { label: "Table 4", icon: "⭐", count: 5 },
+                    { label: "Table 5", icon: "⭐", count: 5 }
+                ],
+                visualType: "pictogram",
+                answers: {
+                    order: "8, 12, 20, 20, 20",
+                    mean: "16",
+                    median: "20",
+                    mode: "20",
+                    range: "12"
+                },
+                explanation: "Values (x4): 12, 20, 8, 20, 20. Ordered: 8, 12, 20, 20, 20. Mean = 16. Median = 20. Mode = 20. Range = 12."
+            },
+            {
+                catIndex: 5,
+                catTitle: "Pictograms",
+                qIndex: 2,
+                title: "Cupcakes Sold at Bake Sale",
+                context: "Cupcakes sold by 4 house teams:",
+                keyText: "Key: 🧁 = 10 cupcakes",
+                pictoData: [
+                    { label: "Red", icon: "🧁", count: 4 },
+                    { label: "Blue", icon: "🧁", count: 7 },
+                    { label: "Green", icon: "🧁", count: 3 },
+                    { label: "Yellow", icon: "🧁", count: 6 }
+                ],
+                visualType: "pictogram",
+                answers: {
+                    order: "30, 40, 60, 70",
+                    mean: "50",
+                    median: "50",
+                    mode: "None",
+                    range: "40"
+                },
+                explanation: "Values (x10): 40, 70, 30, 60. Ordered: 30, 40, 60, 70. Mean = 50. Median = 50. Mode = None. Range = 40."
+            },
+            {
+                catIndex: 5,
+                catTitle: "Pictograms",
+                qIndex: 3,
+                title: "Bicycles Serviced at Workshop",
+                context: "Number of bikes repaired over 5 days:",
+                keyText: "Key: 🚲 = 2 bikes",
+                pictoData: [
+                    { label: "Mon", icon: "🚲", count: 3 },
+                    { label: "Tue", icon: "🚲", count: 5 },
+                    { label: "Wed", icon: "🚲", count: 4 },
+                    { label: "Thu", icon: "🚲", count: 5 },
+                    { label: "Fri", icon: "🚲", count: 3 }
+                ],
+                visualType: "pictogram",
+                answers: {
+                    order: "6, 6, 8, 10, 10",
+                    mean: "8",
+                    median: "8",
+                    mode: "6, 10",
+                    range: "4"
+                },
+                explanation: "Values (x2): 6, 10, 8, 10, 6. Ordered: 6, 6, 8, 10, 10. Mean = 8. Median = 8. Modes = 6 and 10. Range = 4."
+            },
+            {
+                catIndex: 5,
+                catTitle: "Pictograms",
+                qIndex: 4,
+                title: "Trees Planted in Community Park",
+                context: "Saplings planted across 4 zones in an environmental campaign:",
+                keyText: "Key: 🌳 = 8 trees",
+                pictoData: [
+                    { label: "Zone A", icon: "🌳", count: 2 },
+                    { label: "Zone B", icon: "🌳", count: 4 },
+                    { label: "Zone C", icon: "🌳", count: 3 },
+                    { label: "Zone D", icon: "🌳", count: 3 }
+                ],
+                visualType: "pictogram",
+                answers: {
+                    order: "16, 24, 24, 32",
+                    mean: "24",
+                    median: "24",
+                    mode: "24",
+                    range: "16"
+                },
+                explanation: "Values (x8): 16, 32, 24, 24. Ordered: 16, 24, 24, 32. Mean = 24. Median = 24. Mode = 24. Range = 16."
+            },
+            {
+                catIndex: 5,
+                catTitle: "Pictograms",
+                qIndex: 5,
+                title: "Soccer Balls in Sports Storage",
+                context: "Inventory of soccer balls across 5 primary school campuses:",
+                keyText: "Key: ⚽ = 6 balls",
+                pictoData: [
+                    { label: "Campus 1", icon: "⚽", count: 3 },
+                    { label: "Campus 2", icon: "⚽", count: 5 },
+                    { label: "Campus 3", icon: "⚽", count: 2 },
+                    { label: "Campus 4", icon: "⚽", count: 5 },
+                    { label: "Campus 5", icon: "⚽", count: 5 }
+                ],
+                visualType: "pictogram",
+                answers: {
+                    order: "12, 18, 30, 30, 30",
+                    mean: "24",
+                    median: "30",
+                    mode: "30",
+                    range: "18"
+                },
+                explanation: "Values (x6): 18, 30, 12, 30, 30. Ordered: 12, 18, 30, 30, 30. Mean = 24. Median = 30. Mode = 30. Range = 18."
+            },
+            {
+                catIndex: 5,
+                catTitle: "Pictograms",
+                qIndex: 6,
+                title: "Pizzas Delivered on Weekend",
+                context: "Pizzas delivered to 4 residential dorms:",
+                keyText: "Key: 🍕 = 12 pizzas",
+                pictoData: [
+                    { label: "Dorm A", icon: "🍕", count: 2 },
+                    { label: "Dorm B", icon: "🍕", count: 4 },
+                    { label: "Dorm C", icon: "🍕", count: 3 },
+                    { label: "Dorm D", icon: "🍕", count: 1 }
+                ],
+                visualType: "pictogram",
+                answers: {
+                    order: "12, 24, 36, 48",
+                    mean: "30",
+                    median: "30",
+                    mode: "None",
+                    range: "36"
+                },
+                explanation: "Values (x12): 24, 48, 36, 12. Ordered: 12, 24, 36, 48. Mean = 30. Median = 30. Mode = None. Range = 36."
+            },
+            {
+                catIndex: 5,
+                catTitle: "Pictograms",
+                qIndex: 7,
+                title: "Fish in Aquarium Tanks",
+                context: "Tropical fish counts in 5 science lab aquariums:",
+                keyText: "Key: 🐟 = 3 fish",
+                pictoData: [
+                    { label: "Tank 1", icon: "🐟", count: 4 },
+                    { label: "Tank 2", icon: "🐟", count: 6 },
+                    { label: "Tank 3", icon: "🐟", count: 2 },
+                    { label: "Tank 4", icon: "🐟", count: 6 },
+                    { label: "Tank 5", icon: "🐟", count: 2 }
+                ],
+                visualType: "pictogram",
+                answers: {
+                    order: "6, 6, 12, 18, 18",
+                    mean: "12",
+                    median: "12",
+                    mode: "6, 18",
+                    range: "12"
+                },
+                explanation: "Values (x3): 12, 18, 6, 18, 6. Ordered: 6, 6, 12, 18, 18. Mean = 12. Median = 12. Modes = 6 and 18. Range = 12."
+            },
+            {
+                catIndex: 5,
+                catTitle: "Pictograms",
+                qIndex: 8,
+                title: "Books Donated to Charity",
+                context: "Boxes of books donated by 4 primary grades:",
+                keyText: "Key: 📚 = 15 books",
+                pictoData: [
+                    { label: "Gr 2", icon: "📚", count: 2 },
+                    { label: "Gr 3", icon: "📚", count: 4 },
+                    { label: "Gr 4", icon: "📚", count: 3 },
+                    { label: "Gr 5", icon: "📚", count: 5 }
+                ],
+                visualType: "pictogram",
+                answers: {
+                    order: "30, 45, 60, 75",
+                    mean: "52.5",
+                    median: "52.5",
+                    mode: "None",
+                    range: "45"
+                },
+                explanation: "Values (x15): 30, 60, 45, 75. Ordered: 30, 45, 60, 75. Mean = 52.5. Median = 52.5. Mode = None. Range = 45."
+            },
+            {
+                catIndex: 5,
+                catTitle: "Pictograms",
+                qIndex: 9,
+                title: "Bus Passes Issued",
+                context: "Monthly student bus passes issued across 5 school routes:",
+                keyText: "Key: 🚌 = 10 passes",
+                pictoData: [
+                    { label: "Route A", icon: "🚌", count: 4 },
+                    { label: "Route B", icon: "🚌", count: 3 },
+                    { label: "Route C", icon: "🚌", count: 5 },
+                    { label: "Route D", icon: "🚌", count: 3 },
+                    { label: "Route E", icon: "🚌", count: 5 }
+                ],
+                visualType: "pictogram",
+                answers: {
+                    order: "30, 30, 40, 50, 50",
+                    mean: "40",
+                    median: "40",
+                    mode: "30, 50",
+                    range: "20"
+                },
+                explanation: "Values (x10): 40, 30, 50, 30, 50. Ordered: 30, 30, 40, 50, 50. Mean = 40. Median = 40. Modes = 30 and 50. Range = 20."
+            }
+        ];
+
+        // GLOBAL APP STATE & LOCALSTORAGE PERSISTENCE KEY
+        const STORAGE_KEY = "IB_GRADE5_STATS_QUIZ_SAVED_STATE_V3";
+        let currentCatIndex = 0;
+        let currentQIndex = 0;
+        let userAnswers = {};
+        let currentChartInstance = null;
+
+        // INITIALIZATION
+        window.addEventListener('DOMContentLoaded', () => {
+            loadStateFromStorage();
+            renderCategoryGridNav();
+            loadQuestion(currentCatIndex, currentQIndex);
+            updateOverallProgress();
+        });
+
+        // PERSISTENCE FUNCTIONS
+        function saveStateToStorage() {
+            try {
+                const state = {
+                    currentCatIndex,
+                    currentQIndex,
+                    userAnswers
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (e) {
+                console.error("Local storage error:", e);
+            }
+        }
+
+        function loadStateFromStorage() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    currentCatIndex = parsed.currentCatIndex || 0;
+                    currentQIndex = parsed.currentQIndex || 0;
+                    userAnswers = parsed.userAnswers || {};
+                }
+            } catch (e) {
+                console.error("Error loading saved state:", e);
+                userAnswers = {};
+            }
+        }
+
+        function resetDataConfirmation() {
+            if (confirm("Are you sure you want to reset all quiz progress and saved answers? This action cannot be undone.")) {
+                localStorage.removeItem(STORAGE_KEY);
+                userAnswers = {};
+                currentCatIndex = 0;
+                currentQIndex = 0;
+                renderCategoryGridNav();
+                loadQuestion(0, 0);
+                updateOverallProgress();
+            }
+        }
+
+        // CATEGORY SWITCHING & GRID NAVIGATION
+        function switchCategory(catIdx) {
+            currentCatIndex = catIdx;
+            currentQIndex = 0;
+            
+            document.querySelectorAll('.cat-btn').forEach((btn, idx) => {
+                if (idx === catIdx) {
+                    btn.className = "cat-btn w-full text-left px-3 py-2.5 rounded-xl font-medium text-sm transition flex items-center justify-between bg-indigo-50 text-indigo-700 font-bold border-l-4 border-indigo-600";
+                } else {
+                    btn.className = "cat-btn w-full text-left px-3 py-2.5 rounded-xl font-medium text-sm transition flex items-center justify-between text-slate-600 hover:bg-slate-100";
+                }
+            });
+
+            document.getElementById('active-cat-name').textContent = quizData.find(q => q.catIndex === catIdx)?.catTitle || "Category";
+
+            renderCategoryGridNav();
+            loadQuestion(currentCatIndex, currentQIndex);
+            saveStateToStorage();
+        }
+
+        function renderCategoryGridNav() {
+            const gridContainer = document.getElementById('question-grid');
+            gridContainer.innerHTML = '';
+
+            for (let i = 0; i < 10; i++) {
+                const key = `${currentCatIndex}_${i}`;
+                const savedData = userAnswers[key];
+                const isSubmitted = savedData && savedData.submitted;
+                const isCurrent = (i === currentQIndex);
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.onclick = () => {
+                    currentQIndex = i;
+                    renderCategoryGridNav();
+                    loadQuestion(currentCatIndex, currentQIndex);
+                    saveStateToStorage();
+                };
+
+                let baseClasses = "h-9 w-full rounded-lg font-semibold text-xs transition flex items-center justify-center border ";
+                
+                if (isCurrent) {
+                    baseClasses += "ring-2 ring-offset-1 ring-indigo-600 ";
+                }
+
+                if (isSubmitted) {
+                    baseClasses += "bg-emerald-100 text-emerald-800 border-emerald-300 font-bold";
+                } else {
+                    baseClasses += "bg-slate-100 hover:bg-indigo-100 text-slate-700 border-slate-200";
+                }
+
+                btn.className = baseClasses;
+                btn.innerHTML = isSubmitted ? `${i + 1} <i class="fa-solid fa-check text-[10px] ml-1"></i>` : `${i + 1}`;
+                gridContainer.appendChild(btn);
+            }
+
+            for (let c = 0; c < 6; c++) {
+                let count = 0;
+                for (let q = 0; q < 10; q++) {
+                    if (userAnswers[`${c}_${q}`]?.submitted) count++;
+                }
+                const badge = document.getElementById(`cat-badge-${c}`);
+                if (badge) {
+                    badge.textContent = `${count}/10`;
+                    badge.className = count === 10 
+                        ? "text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold" 
+                        : "text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-bold";
+                }
+            }
+        }
+
+        // LOAD QUESTION & RENDER VISUALS
+        function loadQuestion(catIdx, qIdx) {
+            const question = quizData.find(q => q.catIndex === catIdx && q.qIndex === qIdx);
+            if (!question) return;
+
+            // Header info
+            document.getElementById('question-tag').textContent = `Category ${catIdx + 1} • Question ${qIdx + 1} of 10`;
+            document.getElementById('question-title').textContent = question.title;
+            document.getElementById('question-context').textContent = question.context;
+
+            // Render Visual Representation
+            renderVisualElement(question);
+
+            // Load stored user input values
+            const key = `${catIdx}_${qIdx}`;
+            const saved = userAnswers[key] || { order: '', mean: '', median: '', mode: '', range: '', submitted: false };
+
+            document.getElementById('ans-order').value = saved.order || '';
+            document.getElementById('ans-mean').value = saved.mean || '';
+            document.getElementById('ans-median').value = saved.median || '';
+            document.getElementById('ans-mode').value = saved.mode || '';
+            document.getElementById('ans-range').value = saved.range || '';
+
+            resetFeedbackUI();
+
+            const statusPill = document.getElementById('status-pill');
+            const explanationBox = document.getElementById('explanation-box');
+
+            if (saved.submitted) {
+                statusPill.className = "text-xs font-semibold px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 flex items-center gap-1.5";
+                statusPill.innerHTML = '<i class="fa-solid fa-circle-check"></i> Answered';
+                
+                evaluateAndDisplayFeedback(question, saved);
+                explanationBox.classList.remove('hidden');
+                document.getElementById('explanation-content').innerHTML = question.explanation;
+            } else {
+                statusPill.className = "text-xs font-semibold px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 flex items-center gap-1.5";
+                statusPill.innerHTML = '<i class="fa-regular fa-clock"></i> Not Submitted';
+                explanationBox.classList.add('hidden');
+            }
+
+            document.getElementById('btn-prev').disabled = (catIdx === 0 && qIdx === 0);
+            document.getElementById('btn-next').disabled = (catIdx === 5 && qIdx === 9);
+
+            renderCategoryGridNav();
+        }
+
+        // VISUAL RENDERER
+        function renderVisualElement(q) {
+            const container = document.getElementById('visual-container');
+            container.innerHTML = '';
+
+            if (currentChartInstance) {
+                currentChartInstance.destroy();
+                currentChartInstance = null;
+            }
+
+            if (q.visualType === 'numbers') {
+                const box = document.createElement('div');
+                box.className = 'flex flex-wrap justify-center gap-3 py-3 px-6 bg-indigo-50/80 rounded-2xl border border-indigo-100 w-full';
+                q.rawValues.forEach(val => {
+                    const tag = document.createElement('span');
+                    tag.className = 'text-xl md:text-2xl font-mono font-bold bg-white text-indigo-700 px-4 py-2 rounded-xl shadow-sm border border-indigo-100';
+                    tag.textContent = val;
+                    box.appendChild(tag);
+                });
+                container.appendChild(box);
+            } 
+            else if (q.visualType === 'table') {
+                const table = document.createElement('table');
+                table.className = 'min-w-full text-sm text-center border-collapse bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200';
+                
+                const thead = document.createElement('thead');
+                thead.className = 'bg-indigo-600 text-white font-bold';
+                
+                let row1 = `<tr><th class="p-2 border border-indigo-500">${q.tableData[0].label}</th>`;
+                q.tableData[0].values.forEach(v => row1 += `<th class="p-2 border border-indigo-500 font-mono">${v}</th>`);
+                row1 += `</tr>`;
+                thead.innerHTML = row1;
+
+                const tbody = document.createElement('tbody');
+                let row2 = `<tr><td class="p-2 border border-slate-200 font-medium bg-slate-50">${q.tableData[1].label}</td>`;
+                q.tableData[1].values.forEach(v => row2 += `<td class="p-2 border border-slate-200 font-mono text-indigo-700 font-bold">${v}</td>`);
+                row2 += `</tr>`;
+                tbody.innerHTML = row2;
+
+                table.appendChild(thead);
+                table.appendChild(tbody);
+                container.appendChild(table);
+            } 
+            else if (q.visualType === 'chart') {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'w-full max-w-md h-64 relative';
+                const canvas = document.createElement('canvas');
+                wrapper.appendChild(canvas);
+                container.appendChild(wrapper);
+
+                const ctx = canvas.getContext('2d');
+                currentChartInstance = new Chart(ctx, {
+                    type: q.chartType,
+                    data: q.chartData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { 
+                                display: true,
+                                position: q.chartType === 'pie' ? 'right' : 'top',
+                                labels: {
+                                    boxWidth: 12,
+                                    font: { size: 11, family: 'Inter' }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        let value = context.raw || 0;
+                                        if (q.chartType === 'pie') {
+                                            return `${label}: ${value} units`;
+                                        }
+                                        return `${label}: ${value}`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            } 
+            else if (q.visualType === 'pictogram') {
+                const outer = document.createElement('div');
+                outer.className = 'w-full space-y-2 bg-white p-4 rounded-xl border border-slate-200 shadow-sm';
+                
+                const keyBox = document.createElement('div');
+                keyBox.className = 'text-xs font-bold text-indigo-800 bg-indigo-50 py-1 px-3 rounded-lg inline-block mb-2';
+                keyBox.textContent = q.keyText;
+                outer.appendChild(keyBox);
+
+                q.pictoData.forEach(item => {
+                    const row = document.createElement('div');
+                    row.className = 'flex items-center text-sm border-b border-slate-100 pb-1.5';
+                    
+                    const label = document.createElement('div');
+                    label.className = 'w-28 font-semibold text-slate-700 text-xs md:text-sm';
+                    label.textContent = item.label;
+
+                    const icons = document.createElement('div');
+                    icons.className = 'flex flex-wrap gap-1 text-lg';
+                    for (let i = 0; i < item.count; i++) {
+                        icons.innerHTML += `<span class="hover:scale-125 transition-transform cursor-pointer">${item.icon}</span>`;
+                    }
+
+                    row.appendChild(label);
+                    row.appendChild(icons);
+                    outer.appendChild(row);
+                });
+                container.appendChild(outer);
+            }
+        }
+
+        // SUBMIT & ANSWER EVALUATION
+        function submitAnswer() {
+            const question = quizData.find(q => q.catIndex === currentCatIndex && q.qIndex === currentQIndex);
+            if (!question) return;
+
+            const orderVal = document.getElementById('ans-order').value.trim();
+            const meanVal = document.getElementById('ans-mean').value.trim();
+            const medianVal = document.getElementById('ans-median').value.trim();
+            const modeVal = document.getElementById('ans-mode').value.trim();
+            const rangeVal = document.getElementById('ans-range').value.trim();
+
+            const key = `${currentCatIndex}_${currentQIndex}`;
+            userAnswers[key] = {
+                order: orderVal,
+                mean: meanVal,
+                median: medianVal,
+                mode: modeVal,
+                range: rangeVal,
+                submitted: true
+            };
+
+            saveStateToStorage();
+            evaluateAndDisplayFeedback(question, userAnswers[key]);
+            
+            const explanationBox = document.getElementById('explanation-box');
+            explanationBox.classList.remove('hidden');
+            document.getElementById('explanation-content').innerHTML = question.explanation;
+
+            document.getElementById('status-pill').className = "text-xs font-semibold px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 flex items-center gap-1.5";
+            document.getElementById('status-pill').innerHTML = '<i class="fa-solid fa-circle-check"></i> Answered';
+
+            renderCategoryGridNav();
+            updateOverallProgress();
+        }
+
+        function evaluateAndDisplayFeedback(q, userAns) {
+            const fields = ['order', 'mean', 'median', 'mode', 'range'];
+
+            fields.forEach(f => {
+                const inputEl = document.getElementById(`ans-${f}`);
+                const feedEl = document.getElementById(`feedback-${f}`);
+                if (!inputEl || !feedEl) return;
+
+                const userText = (userAns[f] || "").toString();
+                const expectedText = (q.answers[f] || "").toString();
+
+                const isCorrect = normalizeString(userText) === normalizeString(expectedText) || 
+                                  isNumericallyEqual(userText, expectedText);
+
+                feedEl.classList.remove('hidden');
+
+                if (isCorrect) {
+                    inputEl.className = "w-full px-3 py-2 rounded-lg border-2 border-emerald-500 focus:outline-none text-sm font-mono bg-emerald-50/50";
+                    feedEl.className = "text-xs mt-1 font-bold text-emerald-600 flex items-center gap-1";
+                    feedEl.innerHTML = `<i class="fa-solid fa-circle-check"></i> Correct!`;
+                } else {
+                    inputEl.className = "w-full px-3 py-2 rounded-lg border-2 border-rose-400 focus:outline-none text-sm font-mono bg-rose-50/50";
+                    feedEl.className = "text-xs mt-1 font-semibold text-rose-600 flex items-center gap-1";
+                    feedEl.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> Correct answer: <span class="font-bold underline">${expectedText}</span>`;
+                }
+            });
+        }
+
+        function resetFeedbackUI() {
+            const fields = ['order', 'mean', 'median', 'mode', 'range'];
+            fields.forEach(f => {
+                const inputEl = document.getElementById(`ans-${f}`);
+                const feedEl = document.getElementById(`feedback-${f}`);
+                if (inputEl) inputEl.className = "w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm font-mono";
+                if (feedEl) {
+                    feedEl.className = "hidden text-xs mt-1 font-semibold";
+                    feedEl.innerHTML = '';
+                }
+            });
+        }
+
+        function normalizeString(str) {
+            return str.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9,./%-]/g, '');
+        }
+
+        function isNumericallyEqual(val1, val2) {
+            const n1 = parseFloat(val1);
+            const n2 = parseFloat(val2);
+            if (isNaN(n1) || isNaN(n2)) return false;
+            return Math.abs(n1 - n2) < 0.05;
+        }
+
+        function navigateQuestion(direction) {
+            let totalIndex = currentCatIndex * 10 + currentQIndex + direction;
+            if (totalIndex < 0) totalIndex = 0;
+            if (totalIndex > 59) totalIndex = 59;
+
+            const newCat = Math.floor(totalIndex / 10);
+            const newQ = totalIndex % 10;
+
+            if (newCat !== currentCatIndex) {
+                switchCategory(newCat);
+                currentQIndex = newQ;
+                loadQuestion(newCat, newQ);
+            } else {
+                currentQIndex = newQ;
+                loadQuestion(currentCatIndex, currentQIndex);
+            }
+        }
+
+        function updateOverallProgress() {
+            let completed = 0;
+            for (let c = 0; c < 6; c++) {
+                for (let q = 0; q < 10; q++) {
+                    if (userAnswers[`${c}_${q}`]?.submitted) completed++;
+                }
+            }
+            const pct = Math.round((completed / 60) * 100);
+            document.getElementById('overall-progress-text').textContent = `${completed} of 60 Completed`;
+            document.getElementById('overall-progress-bar').style.width = `${pct}%`;
+        }
+    </script>
+</body>
+</html>
